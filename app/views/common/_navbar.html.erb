@@ -3,10 +3,22 @@
     <a class="navbar-brand" href="/">Rails 101</a>
   </div>
   <div class="p-2 bd-highlight">
-    <ul class="navbar-nav mr-auto navbar-right">
-      <li class="nav-item dropdown">
-        <%= link_to("登录", '#') %>
-      </li>
+  <%# 注册 登录 %>
+    <ul class="navbar-nav mr-auto navbar-right d-flex flex-row-reverse bd-highlight">
+      <% if !current_user %>
+        <li class="ml-3"><%= link_to("注册", new_user_registration_path) %> </li>
+        <li><%= link_to("登录", new_user_session_path) %></li>
+      <% else %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Hi!, <%= current_user.email %>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="ml-3"> <%= link_to("退出", destroy_user_session_path, method: :delete) %> </li>
+          </ul>
+        </li>
+      <% end %>
     </ul>
   </div>
 </nav>
