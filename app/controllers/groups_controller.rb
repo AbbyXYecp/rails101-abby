@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  # 创建话题，必须先登录
+  before_action :authenticate_user! , only: [:new]
 
   def index
     @groups = Group.all
