@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   # 创建话题，必须先登录
-  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
   before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy, :join, :quit]
+  before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
 
 
   def index
