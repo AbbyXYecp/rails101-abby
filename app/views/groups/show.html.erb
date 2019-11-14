@@ -1,17 +1,18 @@
 <div class="col-md-12">
   <div class="group float-sm-right"> 
-    <span class="pull-right">
-      <% if current_user && current_user.is_member_of?(@group) %>
-        <label class="btn btn-success  m-0"> 群组成员 </label>
-      <% else %>
-        <label class="btn btn-warning  m-0"> 不是群组成员 </label>
-      <% end %>
-    </span>
-
     <% if current_user && current_user == @group.user %>
       <%= link_to("Edit", edit_group_path(@group), class: "btn btn-primary pull-right")%>
     <% end %>
     <%= link_to("Write a Post", new_group_post_path(@group), class: "pull-right btn btn-info")%>
+    <span class="pull-right">
+      <% if current_user && current_user.is_member_of?(@group) %>
+        <label class="btn btn-success  m-0"> 群组成员 </label>
+        <%= link_to("退出论坛", quit_group_path(@group), method: :post, class: "btn btn-secondary") %>
+      <% else %>
+        <label class="btn btn-warning  m-0"> 不是群组成员 </label>
+        <%= link_to("加入论坛", join_group_path(@group), method: :post, class: "btn btn-secondary") %>
+      <% end %>
+    </span>
   </div>
   <h2><%= @group.title %></h2>
   <p><%= @group.description %></p>

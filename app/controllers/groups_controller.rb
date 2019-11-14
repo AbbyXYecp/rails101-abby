@@ -1,7 +1,8 @@
 class GroupsController < ApplicationController
   # 创建话题，必须先登录
   before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
-  before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
+  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy, :join, :quit]
+
 
   def index
     @groups = Group.all
@@ -41,6 +42,28 @@ class GroupsController < ApplicationController
     @group.destroy
     flash[:alert] = "Group deleted"
     redirect_to groups_path
+  end
+
+  def join
+    @group = Group.find(params[:id])
+    if !current_user.is_member_of?(@group)
+      current_user.join!(@group)
+      flash[:notice] = '加入本讨论版成功!'
+    else
+      flash[:warning] = '您已经是本论坛的成员了～'
+    end
+    redirect_to group_path(@group)
+  end
+
+  def quit
+    @group = Group.find(params[:id])
+    if current_user.is_member_of?(@group)
+      current_user.quit!(@group)
+      flash[:alert] = '您已经成功退出本论坛 : ('
+    else
+      flas[:warning] = '您不是本讨论版成员，怎么退出 XD'
+    end
+    redirect_to group_path(@group)
   end
 
   private
