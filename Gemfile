@@ -32,6 +32,8 @@ gem 'simple_form' # 建议表单
 
 gem 'devise' # 登录系统
 
+gem 'will_paginate' # 分页
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
